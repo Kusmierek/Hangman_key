@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nav-button {
+    @apply text-white bg-blue-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  }
+  .nav-el {
+    @apply block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-300 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700;
+  }
+  .keyboard-el {
+    @apply p-8 text-lg font-semibold text-white bg-blue-300  rounded-lg;
+  }
+  .keyboard-el-dis {
+    @apply p-8 text-lg font-semibold text-white bg-blue-500  rounded-lg;
+  }
+  .keyboard-row {
+    @apply flex justify-center gap-1 w-full h-1/4;
+  }
+
+  .form-label {
+    @apply block text-sm font-semibold text-blue-300;
+  }
+
+  .form-input {
+    @apply block w-full px-4 py-2 mt-2 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40;
+  }
+
+  .form-button {
+    @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-400 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600;
+  }
+
+  .hang-line {
+    color: black;
+  }
+
+  html,
+  body,
+  #root,
+  .App {
+    height: 100vh;
+  }
+  .figure-container {
+    fill: transparent;
+    stroke: black;
+    stroke-width: 4px;
+    stroke-linecap: round;
+  }
+  .game,
+  .login,
+  .sign-up {
+    height: 92vh;
+  }
+  .button-key {
+    border: none;
+  }
+}

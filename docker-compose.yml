@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  server:
+    build: ./server
+    networks:
+      - client_network
+      - server_network
+    ports:
+      - 3000:3000
+    env_file:
+      - ./server/.env
+
+  client:
+    build: ./client
+    networks:
+      - client_network
+    ports:
+      - 5137:5137
+    depends_on:
+      - server
+
+networks:
+  client_network:
+    driver: bridge
+  server_network:
+    driver: bridge
