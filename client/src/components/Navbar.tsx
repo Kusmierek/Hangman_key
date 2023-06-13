@@ -2,13 +2,19 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { StateType } from '../store';
 import { loggedIn, loginType, loggedOut } from '../slices/logginSlice';
+import { useKeycloak } from '@react-keycloak/web';
 
 const Navbar = () => {
   const loginState = useSelector<StateType, loginType>(
     (state) => state.persistedReducer.login
   );
 
+  const { keycloak } = useKeycloak();
   const dispatch = useDispatch();
+  {
+    console.log(keycloak.authenticated);
+  }
+
   return (
     <nav className="bg-purple-300 border-gray-200 px-2 sm:px-4 py-2.5 rounded">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -22,19 +28,24 @@ const Navbar = () => {
             HangMan
           </span>
         </a>
-        {loginState.isLogged ? (
+        {keycloak.authenticated ? (
           <div className="flex md:order-2 space-x-3">
             <Link to="/" className="nav-el">
               <button
                 type="button"
                 className="nav-button "
-                onClick={() => {
-                  dispatch(loggedOut());
-                }}
+                onClick={() => keycloak.logout()}
               >
                 Logout
               </button>
             </Link>
+            {keycloak.hasRealmRole('admin') && (
+              <Link to="/admin/words" className="nav-el">
+                <button type="button" className="nav-button ">
+                  Admin
+                </button>
+              </Link>
+            )}
             <button
               data-collapse-toggle="navbar-cta"
               type="button"
@@ -59,11 +70,13 @@ const Navbar = () => {
                 Sign Up
               </button>
             </Link>
-            <Link to="/login" className="nav-el">
-              <button type="button" className="nav-button ">
-                Login
-              </button>
-            </Link>
+            <button
+              type="button"
+              className="nav-button "
+              onClick={() => keycloak.login()}
+            >
+              Login
+            </button>
             <button
               data-collapse-toggle="navbar-cta"
               type="button"
@@ -82,7 +95,6 @@ const Navbar = () => {
             </button>
           </div>
         )}
-
         <div
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-cta"
