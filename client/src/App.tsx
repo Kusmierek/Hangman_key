@@ -11,21 +11,47 @@ import MainPage from './components/MainPage';
 import Navbar from './components/Navbar';
 import SignUp from './components/SignUp';
 import './index.css';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import { keycloak } from './authentication/keycloak';
+import PrivateRoute from './authentication/PrivateRoute';
 
 function App() {
   return (
     <div className="App bg-gradient-to-r from-purple-200 ">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/categories" element={<Categories />} />
-        <Route path="/game/:catid" element={<Game />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/words" element={<AdminWords />} />
-        <Route path="/admin/cat" element={<AdminCategories />} />
-      </Routes>
+      <ReactKeycloakProvider authClient={keycloak}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/game/:catid" element={<Game />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute>
+                <Admin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/words"
+            element={
+              <PrivateRoute>
+                <AdminWords />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/cat"
+            element={
+              <PrivateRoute>
+                <AdminCategories />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </ReactKeycloakProvider>
     </div>
   );
 }
