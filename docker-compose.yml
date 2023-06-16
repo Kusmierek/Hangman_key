@@ -1,14 +1,14 @@
 version: '3.7'
 services:
-  server:
-    build: ./server
-    networks:
-      - client_network
-      - server_network
-    ports:
-      - 3000:3000
-    env_file:
-      - ./server/.env
+  # server:
+  #   build: ./server
+  #   networks:
+  #     - client_network
+  #     - server_network
+  #   ports:
+  #     - 3000:3000
+  #   env_file:
+  #     - ./server/.env
 
   keycloak:
     image: quay.io/keycloak/keycloak:21.0.2
@@ -21,20 +21,18 @@ services:
       - '8080:8080'
     volumes:
       - ./keycloak/:/opt/keycloak/data/
-    networks:
-      - server_network
 
-  client:
-    build: ./client
-    networks:
-      - client_network
-    ports:
-      - 5137:5137
-    depends_on:
-      - server
+#   client:
+#     build: ./client
+#     networks:
+#       - client_network
+#     ports:
+#       - 5137:5137
+#     depends_on:
+#       - server
 
-networks:
-  client_network:
-    driver: bridge
-  server_network:
-    driver: bridge
+# networks:
+#   client_network:
+#     driver: bridge
+#   server_network:
+#     driver: bridge
