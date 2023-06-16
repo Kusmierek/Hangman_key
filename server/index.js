@@ -8,6 +8,7 @@ import userRouter from './routes/user.route.js';
 import wordRouter from './routes/word.route.js';
 import authRouter from './routes/auth.route.js';
 import gameRouter from './routes/game.route.js';
+import { keycloak } from './middleware/keycloak.services.js';
 
 dotenv.config();
 const corsOptions = {
@@ -17,6 +18,7 @@ const corsOptions = {
 };
 
 const app = express();
+app.use(keycloak.middleware());
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 mongoose.set('strictQuery', false);

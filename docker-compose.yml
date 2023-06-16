@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.7'
 services:
   server:
     build: ./server
@@ -9,6 +9,20 @@ services:
       - 3000:3000
     env_file:
       - ./server/.env
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.0.2
+    container_name: keycloak
+    command: ['start-dev']
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./keycloak/:/opt/keycloak/data/
+    networks:
+      - server_network
 
   client:
     build: ./client
